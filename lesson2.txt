@@ -1,0 +1,132 @@
+
+--2Создайте базу данных example, разместите в ней таблицу users, состоящую 
+-- из двух столбцов, числового id и строкового name.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| prima              |
+| sakila             |
+| sys                |
+| vk                 |
+| world              |
++--------------------+
+8 rows in set (0.09 sec)
+
+mysql> CREATE DATABASE example;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SHOW DATABASES
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| prima              |
+| sakila             |
+| sys                |
+| vk                 |
+| world              |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> USE example;
+Database changed
+mysql> CREATE TABLE users (ID SERIAL, name VARCHAR(50) NOT NULL UNIQUE);
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_example |
++-------------------+
+| users             |
++-------------------+
+1 row in set (0.02 sec)
+
+--3Создайте дамп базы данных example из предыдущего задания, разверните содержимое дампа в новую базу данных sample.
+
+
+mysql> CRREATE DATABASE sample;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your 
+MySQL server version for the right syntax to use near 'CRREATE DATABASE sample' at line 1
+
+mysql> CREATE DATABASE sample;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> exit
+Bye
+
+C:\Users\User>mysqldump -u root -p example > example.sql
+Enter password: ********
+
+C:\Users\User>dir
+ Том в устройстве C имеет метку Windows
+ Серийный номер тома: 9475-9DEF
+
+ Содержимое папки C:\Users\User
+
+02.09.2021  00:36    <DIR>          .
+02.09.2021  00:36    <DIR>          ..
+30.08.2021  09:55             6.701 .bash_history
+23.06.2021  22:26    <DIR>          .config
+23.08.2021  20:53    <DIR>          .eclipse
+.............
+01.09.2021  09:37    <DIR>          Desktop
+30.08.2021  18:04    <DIR>          Documents
+01.09.2021  17:16    <DIR>          Downloads
+02.09.2021  00:36             1.945 example.sql
+05.02.2021  10:32    <DIR>          Favorites
+23.06.2021  21:42    <DIR>          git
+05.02.2021  10:32    <DIR>          Links
+05.02.2021  10:32    <DIR>          Music
+...........
+               7 файлов         13.274 байт
+              16 папок  13.823.094.784 байт свободно
+
+C:\Users\User>mysql -u root -p sample < example.sql
+Enter password: ********
+
+C:\Users\User>mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 65
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE sample
+Database changed
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_sample |
++------------------+
+| users            |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> exit
+Bye
+
+
+
+-- 4(по желанию) Ознакомьтесь более подробно с документацией утилиты mysqldump. Создайте дамп единственной
+-- таблицы help_keyword базы данных mysql. Причем добейтесь того, чтобы дамп содержал только
+-- первые 100 строк таблицы.
+
+
+
+PS C:\Users\User> mysqldump -u root -p --where="true limit 100" help_keyword > help_keyword_second.sql
+Enter password: ********
